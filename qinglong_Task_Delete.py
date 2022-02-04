@@ -22,13 +22,14 @@ logger = logging.getLogger(__name__)
 
 rootdirs = ["/ql/scripts",
             "/ql/repo"]
-
-delete_name = str(os.getenv("DELETE_NAME"))
-if not delete_name:
+            
+DELETENAME = str(os.getenv("DELETE_NAME"))
+if not DELETENAME:
     logger.info('未检测到删除变量,请设置 DELETE_NAME\n')
     sys.exit(1)
 else:
-    logger.info(f'您选择删除的任务前缀为 {delete_name}')
+    delete_names = DELETENAME.split("&")
+    logger.info(f'您选择删除的任务前缀为 {delete_names}')
 
 ipport = os.getenv("IPPORT")
 if not ipport:
@@ -46,20 +47,21 @@ def delete_file():
     for rootdir in rootdirs:
         filelist = os.listdir(rootdir)
         for file in filelist:
-            if delete_name in file:
-                del_file = rootdir + '/' + file  # 当代码和要删除的文件不在同一个文件夹时，必须使用绝对路径
-                try:
-                    os.remove(del_file)  # 删除文件
-                except:
-                    del_list = os.listdir(del_file)
-                    for f in del_list:
-                        file_path = os.path.join(del_file, f)
-                        if os.path.isfile(file_path):
-                            os.remove(file_path)
-                        elif os.path.isdir(file_path):
-                            shutil.rmtree(file_path)
-                    os.removedirs(del_file)
-                logger.info(f"❌ 已经删除脚本文件: {del_file}")
+            for delete_name in delete_names:
+                if delete_name in file:
+                    del_file = rootdir + '/' + file  # 当代码和要删除的文件不在同一个文件夹时，必须使用绝对路径
+                    try:
+                        os.remove(del_file)  # 删除文件
+                    except:
+                        del_list = os.listdir(del_file)
+                        for f in del_list:
+                            file_path = os.path.join(del_file, f)
+                            if os.path.isfile(file_path):
+                                os.remove(file_path)
+                            elif os.path.isdir(file_path):
+                                shutil.rmtree(file_path)
+                        os.removedirs(del_file)
+                    logger.info(f"❌ 已经删除脚本文件: {del_file}")
 
 
 def ql_login():
@@ -134,9 +136,10 @@ def filter_delete(tasklist: list):
     logger.info("\n正在筛选需要删除的任务...")
     delete_id_list = []
     for task in tasklist:
-        if task.get("command").find(delete_name) != -1:
-            logger.info(f"【❌ 待删除任务】{task.get('command')}")
-            delete_id_list.append(task.get("id"))
+        for delete_name in delete_names:
+            if task.get("command").find(delete_name) != -1:
+                logger.info(f"【❌ 待删除任务】{task.get('command')}")
+                delete_id_list.append(task.get("id"))
     return delete_id_list
 
 
