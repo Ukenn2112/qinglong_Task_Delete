@@ -6,9 +6,9 @@
 
 - 1.拉库命令
 
-  - 可以直链github/国外机:   `ql repo https://github.com/Ukenn2112/qinglong_Backup.git`
+  - 可以直链github/国外机:   `ql repo https://github.com/Ukenn2112/qinglong_Task_Delete.git`
   
-  - 国内镜像(部分人不可用):  `ql repo https://github.com.cnpmjs.org/qinglong_Backup.git`
+  - 国内镜像(部分人不可用):  `ql repo https://github.com.cnpmjs.org/Ukenn2112/qinglong_Task_Delete.git`
 
 - 2.设置变量
 
