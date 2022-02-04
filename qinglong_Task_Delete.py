@@ -25,7 +25,7 @@ rootdirs = ["/ql/scripts",
 
 delete_name = os.getenv("DELETE_NAME")
 if not delete_name:
-    logger.info('未检测到删除变量,请设置 DELETE_NAME')
+    logger.info('未检测到删除变量,请设置 DELETE_NAME\n')
     sys.exit(1)
 else:
     logger.info(f'您选择删除的任务前缀为 {delete_name}')
@@ -33,9 +33,9 @@ else:
 ipport = os.getenv("IPPORT")
 if not ipport:
     logger.info(
-        "如果报错请在环境变量中添加你的真实 IP:端口\n变量名：YYDS_IPPORT\t值：127.0.0.1:5700\n或在 config.sh 中添加 export YYDS_IPPORT='127.0.0.1:5700'"
+        "如果青龙登录失败请在环境变量中添加你的真实 IP:端口\n变量名：IPPORT\t值：127.0.0.1:5700\n或在 config.sh 中添加 export YYDS_IPPORT='127.0.0.1:5700'\n"
     )
-    ipport = "192.168.50.125:5700"
+    ipport = "localhost:5700"
 else:
     ipport = ipport.lstrip("http://").rstrip("/")
 
