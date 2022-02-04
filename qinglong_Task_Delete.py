@@ -131,7 +131,7 @@ def get_tasklist(token) -> list:
 
 def filter_delete(tasklist: list):
     """筛选任务 删除"""
-    logger.info("正在筛选需要删除的任务...")
+    logger.info("\n正在筛选需要删除的任务...")
     delete_id_list = []
     for task in tasklist:
         if task.get("command").find(delete_name) != -1:
@@ -142,7 +142,7 @@ def filter_delete(tasklist: list):
 
 def delete_tasks(ids, token):
     """开始删除"""
-    logger.info("开始删除任务...")
+    logger.info("\n开始删除任务...")
     t = round(time.time() * 1000)
     url = f"http://{ipport}/api/crons?t={t}"
     data = json.dumps(ids)
@@ -157,7 +157,7 @@ def delete_tasks(ids, token):
 
 
 if __name__ == "__main__":
-    logger.info("===> 删除任务脚本开始 <===")
+    logger.info("===> 删除任务脚本开始 <===\n")
     delete_file()
     token = ql_login()
     tasklist = get_tasklist(token)
@@ -166,5 +166,5 @@ if __name__ == "__main__":
         delete_tasks(delete_id_list, token)
     else:
         logger.info("❌ 未找到需要删除的任务")
-    logger.info("===> 删除任务脚本结束 <===")
+    logger.info("===> 删除任务脚本结束 <===\n")
     sys.exit(0)
