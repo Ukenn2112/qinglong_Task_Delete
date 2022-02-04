@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 rootdirs = ["/ql/scripts",
             "/ql/repo"]
 
-delete_name = os.getenv("DELETE_NAME")
+delete_name = str(os.getenv("DELETE_NAME"))
 if not delete_name:
     logger.info('未检测到删除变量,请设置 DELETE_NAME\n')
     sys.exit(1)
