@@ -34,7 +34,7 @@ else:
 ipport = os.getenv("IPPORT")
 if not ipport:
     logger.info(
-        "如果青龙登录失败请在环境变量中添加你的真实 IP:端口\n变量名：IPPORT\t值：127.0.0.1:5700\n或在 config.sh 中添加 export YYDS_IPPORT='127.0.0.1:5700'\n"
+        "如果青龙登录失败请在环境变量中添加你的真实 IP:端口\n变量名：IPPORT\t值：127.0.0.1:5700\n或在 config.sh 中添加 export IPPORT='127.0.0.1:5700'\n"
     )
     ipport = "localhost:5700"
 else:
