@@ -139,7 +139,10 @@ def filter_delete(tasklist: list):
         for delete_name in delete_names:
             if task.get("command").find(delete_name) != -1:
                 logger.info(f"【❌ 待删除任务】{task.get('command')}")
-                delete_id_list.append(task.get("id"))
+                if task.get("id") is not None:
+                    delete_id_list.append(task.get("id"))
+                else:
+                    delete_id_list.append(task.get("_id"))
     return delete_id_list
 
 
