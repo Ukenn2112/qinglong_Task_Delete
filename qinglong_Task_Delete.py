@@ -45,23 +45,23 @@ def delete_file():
     """删除文件"""
     logger.info("⚠️ 开始删除任务脚本文件")
     for rootdir in rootdirs:
-        filelist = os.listdir(rootdir)
-        for file in filelist:
-            for delete_name in delete_names:
-                if delete_name in file:
-                    del_file = rootdir + '/' + file  # 当代码和要删除的文件不在同一个文件夹时，必须使用绝对路径
-                    try:
-                        os.remove(del_file)  # 删除文件
-                    except:
-                        del_list = os.listdir(del_file)
-                        for f in del_list:
-                            file_path = os.path.join(del_file, f)
-                            if os.path.isfile(file_path):
-                                os.remove(file_path)
-                            elif os.path.isdir(file_path):
-                                shutil.rmtree(file_path)
-                        os.removedirs(del_file)
-                    logger.info(f"❌ 已经删除脚本文件: {del_file}")
+        for root, dirs, files in os.walk(rootdir): # 履历所有层文件夹文件
+            for file in files:
+                for delete_name in delete_names:
+                    if delete_name in file:
+                        del_file = os.path.join(root, file)
+                        try:
+                            os.remove(del_file)  # 删除文件
+                        except:
+                            del_list = os.listdir(del_file)
+                            for f in del_list:
+                                file_path = os.path.join(del_file, f)
+                                if os.path.isfile(file_path):
+                                    os.remove(file_path)
+                                elif os.path.isdir(file_path):
+                                    shutil.rmtree(file_path)
+                            os.removedirs(del_file)
+                        logger.info(f"❌ 已经删除脚本文件: {del_file}")
 
 
 def ql_login():
