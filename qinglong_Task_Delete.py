@@ -45,9 +45,16 @@ def delete_file():
     """删除文件"""
     logger.info("⚠️ 开始删除任务脚本文件")
     for rootdir in rootdirs:
-        for delete_name in delete_names:
-            shutil.rmtree(rootdir+'/'+delete_name)
-            logger.info(f"❌ 已删除 {rootdir}/{delete_name} 目录及其目录下的脚本文件")
+        file_list = os.listdir(rootdir)
+        for files in file_list:
+            for delete_name in delete_names:
+                if delete_name in files:
+                    try:
+                        shutil.rmtree(rootdir+'/'+files)
+                        logger.info(f"❌ 已删除 {rootdir}/{files} 目录及其目录下的脚本文件")
+                    except NotADirectoryError:
+                        os.remove(rootdir+'/'+files)
+                        logger.info(f"❌ 已删除脚本文件 {rootdir}/{files}")
 
 
 def ql_login():
